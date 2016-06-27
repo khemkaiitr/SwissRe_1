@@ -36,17 +36,18 @@ for (i in 1:length(my_pdf_txt)){
       loc_names = unique(bio[bio_annotations[k == "location"]])
       # Some preprocessing of the data
       
-      loc_names = gsub("[[:digit:]]|[[:space:]]", "", loc_names)
+      loc_names = gsub("[[:digit:]]", "", loc_names)
       loc_names = gsub("[[:punct:]]", "", loc_names) # Additional preprocessing to remove punctuation characters
-
+      loc_names <- gsub("[\r\n\t]", "", loc_names)
       
       # Save data in temporary variable temp and store them in the final dataframe
       temp = data.frame(pageno = i, location = loc_names,
                         stringsAsFactors=FALSE)
       resultFrame <- rbind(resultFrame, temp)
+      # Remove variables
       rm(temp, loc_names)
     }
-    rm(k, bio, bio_annotations)
+    rm(k, bio, bio_annotations) # remove variables
   }
 }
 
